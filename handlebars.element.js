@@ -123,8 +123,6 @@
         attributes[name] = bool ? value != false : value;
       }
 
-      console.log(attributes)
-
       replaceWith(element, fn.apply(element, [attributes]));
     }
 
