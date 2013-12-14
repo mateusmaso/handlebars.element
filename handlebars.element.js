@@ -53,7 +53,7 @@
   };
 
   var insertAfter = function(node, nodes) {
-    nodes = isArray(nodes) ? nodes : [nodes];
+    nodes = isArray(nodes) ? nodes.slice() : [nodes];
     nodes.unshift(node);
 
     for (var index = 1; index < nodes.length; index++) {
@@ -120,7 +120,7 @@
         var bool = fn.options.booleans && fn.options.booleans.indexOf(name) >= 0;
         delete store[attribute.nodeValue];
 
-        attributes[name] = bool ? value != false : value;
+        attributes[name] = bool ? value !== false : value;
       }
 
       replaceWith(element, fn.apply(element, [attributes]));
