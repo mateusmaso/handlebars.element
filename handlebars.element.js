@@ -72,6 +72,8 @@
       var id = ++increment + "c";
       store[id] = value;
       value = id;
+    } else if (value === false) {
+      value = value.toString()
     }
 
     return escapeExpression.apply(this, [value]);
@@ -100,7 +102,7 @@
         }
 
         if (/^hb-/i.test(nodes[index].nodeName)) {
-          elements.push(nodes[index]);
+          elements.unshift(nodes[index]);
         }
       }
 
@@ -120,7 +122,7 @@
         var bool = fn.options.booleans && fn.options.booleans.indexOf(name) >= 0;
         delete store[attribute.nodeValue];
 
-        attributes[name] = bool ? value !== false : value;
+        attributes[name] = bool ? value !== false : (value === "" ? undefined : value);
       }
 
       replaceWith(element, fn.apply(element, [attributes]));
