@@ -4,7 +4,7 @@ handlebars.element
 ## Register your custom element
 
 ```javascript
-Handlebars.registerElement("foo", function(element, attributes) {
+Handlebars.registerElement("foo", function(attributes) {
   var div = document.createElement("div");
   
   if (attributes.red) div.style.background = "red";
