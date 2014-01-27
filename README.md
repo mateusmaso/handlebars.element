@@ -1,7 +1,7 @@
 handlebars.element
 ==================
 
-## Register your custom element
+### Register your custom element
 
 ```javascript
 Handlebars.registerElement("foo", function(attributes) {
@@ -17,7 +17,7 @@ Handlebars.registerElement("foo", function(attributes) {
 }, {booleans: ["red", "green", "blue"]});
 ```
 
-## Declare using the hb-* syntax
+### Declare using the hb-* syntax
 
 ```html
 <div>
@@ -28,7 +28,7 @@ Handlebars.registerElement("foo", function(attributes) {
 </div>
 ```
 
-## Parse the template html string after render
+### Parse the template html string after render
 
 ```javascript
 var html = Handlebars.templates["path/to/template"]();
