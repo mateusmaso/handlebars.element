@@ -34,3 +34,14 @@ Handlebars.registerElement("foo", function(attributes) {
 var html = Handlebars.templates["path/to/template"]();
 var nodes = Handlebars.parseHTML(html);
 ```
+
+### HTML result
+
+```html
+<div>
+  <p>Now you can have custom elements with Handlebars!</p>
+  <div style="background: red">Hello World Vermelho</div>
+  <div style="background: green">Hello World Verde</div>
+  <div style="background: blue">Hello World Azul</div>
+</div>
+```
