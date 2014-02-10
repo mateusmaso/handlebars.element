@@ -28,7 +28,7 @@ Handlebars.registerElement("foo", function(attributes) {
 </div>
 ```
 
-### Parse the template html string after render
+### Parse the template HTML string after render
 
 ```javascript
 var html = Handlebars.templates["path/to/template"]();
