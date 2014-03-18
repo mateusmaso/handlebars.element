@@ -66,6 +66,7 @@
   };
 
   Handlebars.elements = {};
+  Handlebars.attributes = {};
 
   Handlebars.Utils.escapeExpression = function(value) {
     if (isObject(value) && !(value instanceof Handlebars.SafeString)) {
@@ -84,12 +85,18 @@
     this.elements[name] = fn;
   };
 
+  Handlebars.registerAttribute = function(name, fn, options) {
+    fn.options = options || {};
+    this.attributes[name] = fn;
+  };
+
   Handlebars.parseHTML = function(html) {
     var div = document.createElement('div');
     div.innerHTML = html.trim();
 
     var nodes = flatten(div.childNodes);
     var elements = [];
+    var attributes = [];
 
     while (nodes.length != 0) {
       var nextNodes = [];
@@ -101,6 +108,14 @@
           nextNodes.push(childNodes[bIndex]);
         }
 
+        if (nodes[index].attributes) {
+          for (var bIndex = 0; bIndex < nodes[index].attributes.length; bIndex++) {
+            if (/hb-/i.test(nodes[index].attributes[bIndex].name)) {
+              attributes.unshift(nodes[index].attributes[bIndex]);
+            }
+          }
+        }
+
         if (/^hb-/i.test(nodes[index].nodeName)) {
           elements.unshift(nodes[index]);
         }
@@ -110,8 +125,8 @@
     }
 
     for (var index = 0; index < elements.length; index++) {
-      var attributes = {};
       var element = elements[index];
+      var elementAttributes = {};
       var elementName = element.tagName.toLowerCase().replace("hb-", "");
       var fn = Handlebars.elements[elementName];
 
@@ -122,10 +137,25 @@
         var bool = fn.options.booleans && fn.options.booleans.indexOf(name) >= 0;
         delete store[attribute.nodeValue];
 
-        attributes[name] = bool ? value !== false : (value === "" ? undefined : value);
+        elementAttributes[name] = bool ? value !== false : (value === "" ? undefined : value);
       }
 
-      replaceWith(element, fn.apply(element, [attributes]));
+      var newElement = fn.apply(element, [elementAttributes]);
+
+      replaceWith(element, newElement);
+    }
+
+    for (var index = 0; index < attributes.length; index++) {
+      var attribute = attributes[index];
+      var attributeName = attribute.name.replace("hb-", "");
+      var fn = Handlebars.attributes[attributeName];
+      var newAttribute = fn.apply(attribute);
+
+      if (newAttribute) {
+        attribute.ownerElement.setAttributeNode(newAttribute);
+      }
+
+      attribute.ownerElement.removeAttributeNode(attribute);
     }
 
     return flatten(div.childNodes);
