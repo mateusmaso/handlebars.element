@@ -111,7 +111,7 @@
         if (nodes[index].attributes) {
           for (var bIndex = 0; bIndex < nodes[index].attributes.length; bIndex++) {
             if (/hb-/i.test(nodes[index].attributes[bIndex].name)) {
-              attributes.unshift(nodes[index].attributes[bIndex]);
+              attributes.unshift([nodes[index], nodes[index].attributes[bIndex]]);
             }
           }
         }
@@ -146,16 +146,17 @@
     }
 
     for (var index = 0; index < attributes.length; index++) {
-      var attribute = attributes[index];
+      var element = attributes[index][0];
+      var attribute = attributes[index][1];
       var attributeName = attribute.name.replace("hb-", "");
       var fn = Handlebars.attributes[attributeName];
-      var newAttribute = fn.apply(attribute);
+      var newAttribute = fn.apply(attribute, [element]);
 
       if (newAttribute) {
-        attribute.ownerElement.setAttributeNode(newAttribute);
+        element.setAttributeNode(newAttribute);
       }
 
-      attribute.ownerElement.removeAttributeNode(attribute);
+      element.removeAttributeNode(attribute);
     }
 
     return flatten(div.childNodes);
