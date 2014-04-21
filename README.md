@@ -18,7 +18,7 @@ Handlebars.registerElement("foo", function(attributes) {
 ```
 
 ```javascript
-Handlebars.registerAttribute("bar", function() {
+Handlebars.registerAttribute("bar", function(element) {
   var style = document.createAttribute("style");
   style.background = "purple";
   
