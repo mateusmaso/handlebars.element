@@ -1,7 +1,21 @@
 handlebars.element
 ==================
 
-### Register your custom element or attribute
+This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the usage of this new declarative syntax and support this technology as a proof of concept.
+
+## Features
+
+## Usage
+
+```javascript
+var context = {};
+var template = Handlebars.templates["path/to/your/template"];
+var nodes = Handlebars.parseHTML(template(context));
+```
+
+## Examples
+
+### Registering a custom element
 
 ```javascript
 Handlebars.registerElement("foo", function(attributes) {
@@ -17,6 +31,8 @@ Handlebars.registerElement("foo", function(attributes) {
 }, {booleans: ["red", "green", "blue"]});
 ```
 
+### Registering a custom attribute
+
 ```javascript
 Handlebars.registerAttribute("bar", function(element) {
   var style = document.createAttribute("style");
@@ -26,7 +42,7 @@ Handlebars.registerAttribute("bar", function(element) {
 });
 ```
 
-### Declare using the hb-* syntax
+### Declaring it using the hb-* syntax
 
 ```html
 <div>
@@ -37,14 +53,7 @@ Handlebars.registerAttribute("bar", function(element) {
 </div>
 ```
 
-### Parse the template HTML string after render
-
-```javascript
-var html = Handlebars.templates["path/to/template"]();
-var nodes = Handlebars.parseHTML(html);
-```
-
-### HTML result
+### The result after render
 
 ```html
 <div>
@@ -54,3 +63,7 @@ var nodes = Handlebars.parseHTML(html);
   <div style="background: blue">Hello World Azul</div>
 </div>
 ```
+
+## License
+
+Copyright (c) 2013-2014 Mateus Maso. Released under an MIT license.
