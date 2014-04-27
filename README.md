@@ -5,6 +5,9 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ## Features
 
+* Custom element like declarations
+* Custom attribute like declarations
+
 ## Usage
 
 ```javascript
@@ -53,7 +56,7 @@ Handlebars.registerAttribute("bar", function(element) {
 </div>
 ```
 
-### The result after render
+### Expected result after render
 
 ```html
 <div>
