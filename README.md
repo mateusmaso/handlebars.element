@@ -5,7 +5,8 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ## Features
 
-* Custom element and attribute like declarations
+* Custom element and attribute like declarations.
+* ```registerElement``` and ```registerAttribute``` functions.
 
 ## Dependencies
 
