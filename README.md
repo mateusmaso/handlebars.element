@@ -1,7 +1,7 @@
 handlebars.element
 ==================
 
-This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the adoption of this new declarative syntax and support this technology as a proof of concept.
+This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the adoption of this new declarative syntax and support the spec as a proof of concept.
 
 ## Features
 
