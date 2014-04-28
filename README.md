@@ -8,6 +8,10 @@ This library is an extension for Handlebars which allows declaring custom elemen
 * Custom element like declarations
 * Custom attribute like declarations
 
+## Dependencies
+
+* handlebars.js (>= 1.0)
+
 ## Usage
 
 ```javascript
