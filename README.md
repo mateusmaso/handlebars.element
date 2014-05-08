@@ -47,7 +47,7 @@ Handlebars.registerAttribute("bar", function(element) {
   style.background = "purple";
   
   return style;
-});
+}, {replace: function() { ... }});
 ```
 
 ### Declaring it using the hb-* syntax
