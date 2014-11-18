@@ -1,12 +1,17 @@
 handlebars.element [![Build Status](https://travis-ci.org/mateusmaso/handlebars.element.svg?branch=master)](https://travis-ci.org/mateusmaso/handlebars.element)
 ==================
 
-This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the adoption of this new declarative syntax and support this technology as a proof of concept.
+This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the adoption of this new declarative syntax and support the spec as a proof of concept.
 
 ## Features
 
-* Custom element like declarations
-* Custom attribute like declarations
+* Custom element and attribute declarations.
+* Parse string template into nodes with ```parseHTML```.
+* ```registerElement``` and ```registerAttribute``` functions.
+
+## Dependencies
+
+* handlebars.js (>= 1.0)
 
 ## Usage
 
