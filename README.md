@@ -11,7 +11,7 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ## Dependencies
 
-* handlebars.js (>= 1.0)
+* handlebars.js (>= 1.1)
 
 ## Usage
 

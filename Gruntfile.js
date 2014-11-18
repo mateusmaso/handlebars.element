@@ -5,7 +5,7 @@ module.exports = function(grunt) {
       version: '<%= pkg.version %>',
       banner:
         '// <%= pkg.name %>\n' +
-        '// -----------------\n' +
+        '// ------------------\n' +
         '// v<%= pkg.version %>\n' +
         '//\n' +
         '// Copyright (c) 2013-<%= grunt.template.today("yyyy") %> Mateus Maso\n' +
