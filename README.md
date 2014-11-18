@@ -1,4 +1,4 @@
-handlebars.element
+handlebars.element [![Build Status](https://travis-ci.org/mateusmaso/handlebars.element.svg?branch=master)](https://travis-ci.org/mateusmaso/handlebars.element)
 ==================
 
 This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the adoption of this new declarative syntax and support this technology as a proof of concept.
@@ -23,13 +23,13 @@ var nodes = Handlebars.parseHTML(template(context));
 ```javascript
 Handlebars.registerElement("foo", function(attributes) {
   var div = document.createElement("div");
-  
+
   if (attributes.red) div.style.background = "red";
   if (attributes.green) div.style.background = "green";
   if (attributes.blue) div.style.background = "blue";
-  
+
   div.innerText = "Hello World " + (attributes.title ? attributes.title : "guest");
-  
+
   return div;
 }, {booleans: ["red", "green", "blue"]});
 ```
@@ -40,9 +40,9 @@ Handlebars.registerElement("foo", function(attributes) {
 Handlebars.registerAttribute("bar", function(element) {
   var style = document.createAttribute("style");
   style.background = "purple";
-  
+
   return style;
-});
+}, {ready: function(element) { ... }});
 ```
 
 ### Declaring it using the hb-* syntax
