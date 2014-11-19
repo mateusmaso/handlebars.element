@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.1.0
+// v0.1.1
 //
 // Copyright (c) 2013-2014 Mateus Maso
 // Distributed under MIT license
@@ -35,6 +35,14 @@
     var value = Handlebars.store[key];
     delete Handlebars.store[key];
     return value;
+  };
+
+  Handlebars.store.keyFor = function(value) {
+    for (var key in Handlebars.store) {
+      if (Handlebars.store[key] == value) {
+        return key;
+      }
+    }
   };
 
   Handlebars.Utils.extend = function(object, value) {
@@ -106,9 +114,15 @@
 
   Handlebars.Utils.escapeExpression = function(value) {
     if (Utils.isObject(value) && !(value instanceof Handlebars.SafeString)) {
-      var id = Utils.uniqueId();
-      Handlebars.store.hold(id, value);
-      value = id;
+      var id = Handlebars.store.keyFor(value);
+
+      if (id) {
+        value = id;
+      } else {
+        id = Utils.uniqueId();
+        Handlebars.store.hold(id, value);
+        value = id;
+      }
     } else if (value === false) {
       value = value.toString()
     }
@@ -148,6 +162,10 @@
 
   Handlebars.parseHTML = function(html) {
     var bindings = [];
+
+    if (html instanceof Handlebars.SafeString) {
+      html = html.toString();
+    }
 
     if (Utils.isString(html)) {
       var div = document.createElement('div');
