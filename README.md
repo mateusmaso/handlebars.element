@@ -5,13 +5,19 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ## Features
 
-* Custom element and attribute declarations.
-* Parse string template into nodes with ```parseHTML```.
-* ```registerElement``` and ```registerAttribute``` functions.
+* New ```parseHTML``` method for parsing string templates into HTML nodes.
+* ```registerElement``` and ```registerAttribute``` methods for defining custom elements and attributes.
 
 ## Dependencies
 
-* handlebars.js (>= 1.1)
+* handlebars.js (>= 1.1.0)
+
+## Node
+
+```javascript
+var Handlebars = global.Handlebars = require("handlebars");
+require("handlebars.element");
+```
 
 ## Usage
 
@@ -28,15 +34,20 @@ var nodes = Handlebars.parseHTML(template(context));
 ```javascript
 Handlebars.registerElement("foo", function(attributes) {
   var div = document.createElement("div");
-
-  if (attributes.red) div.style.background = "red";
-  if (attributes.green) div.style.background = "green";
-  if (attributes.blue) div.style.background = "blue";
-
   div.innerText = "Hello World " + (attributes.title ? attributes.title : "guest");
 
+  if (attributes.red) {
+    div.className = "red;";
+  } else if (attributes.green) {
+    div.className = "green";
+  } else if (attributes.blue) {
+    div.className = "blue";
+  }
+
   return div;
-}, {booleans: ["red", "green", "blue"]});
+}, {
+  booleans: ["red", "green", "blue"]
+});
 ```
 
 ### Registering a custom attribute
@@ -44,20 +55,24 @@ Handlebars.registerElement("foo", function(attributes) {
 ```javascript
 Handlebars.registerAttribute("bar", function(element) {
   var style = document.createAttribute("style");
-  style.background = "purple";
-
+  style.className = "purple";
   return style;
-}, {ready: function(element) { ... }});
+}, {
+  ready: function(element) {
+    // this callback ensures that the element is a valid HTML node. It is useful in cases that the attribute was declared inside a custom element scope.
+  }
+});
 ```
 
-### Declaring it using the hb-* syntax
+### Declaring using the hb-* syntax
 
 ```html
 <div>
   <p hb-bar>Now you can have custom elements or attributes with Handlebars!</p>
-  <hb-foo title="Vermelho" red></hb-foo>
-  <hb-foo title="Verde" green></hb-foo>
-  <hb-foo title="Azul" blue></hb-foo>
+  <hb-foo title="Red" red></hb-foo>
+  <hb-foo title="Green" green></hb-foo>
+  <hb-foo title="Blue" blue></hb-foo>
+  <hb-foo title="Purple" hb-bar></hb-foo>
 </div>
 ```
 
@@ -65,10 +80,11 @@ Handlebars.registerAttribute("bar", function(element) {
 
 ```html
 <div>
-  <p style="background: purple">Now you can have custom elements or attributes with Handlebars!</p>
-  <div style="background: red">Hello World Vermelho</div>
-  <div style="background: green">Hello World Verde</div>
-  <div style="background: blue">Hello World Azul</div>
+  <p class="purple">Now you can have custom elements or attributes with Handlebars!</p>
+  <div class="red">Hello World Red</div>
+  <div class="green">Hello World Green</div>
+  <div class="blue">Hello World Blue</div>
+  <div class="purple">Hello World Purple</div>
 </div>
 ```
 

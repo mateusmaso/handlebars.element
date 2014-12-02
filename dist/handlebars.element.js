@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.1.1
+// v0.1.2
 //
 // Copyright (c) 2013-2014 Mateus Maso
 // Distributed under MIT license
@@ -184,7 +184,9 @@
         var binding = {owner: nodes[index], element: undefined, attributes: []};
         var childNodes = Utils.flatten(nodes[index].childNodes);
 
-        for (var bIndex = 0; bIndex < childNodes.length; bIndex++) nextNodes.push(childNodes[bIndex]);
+        for (var bIndex = 0; bIndex < childNodes.length; bIndex++) {
+          nextNodes.push(childNodes[bIndex]);
+        }
 
         if (nodes[index].attributes) {
           for (var bIndex = 0; bIndex < nodes[index].attributes.length; bIndex++) {
@@ -194,8 +196,13 @@
           }
         }
 
-        if (/^hb-/i.test(nodes[index].nodeName)) binding.element = nodes[index];
-        if (binding.element || binding.attributes.length > 0) bindings.unshift(binding);
+        if (/^hb-/i.test(nodes[index].nodeName)) {
+          binding.element = nodes[index];
+        }
+
+        if (binding.element || binding.attributes.length > 0) {
+          bindings.unshift(binding);
+        }
       }
 
       nodes = nextNodes;
@@ -213,7 +220,10 @@
           var attributeFn = Handlebars.attributes[attributeName];
           var newAttribute = attributeFn.apply(attribute, [owner]);
 
-          if (newAttribute) owner.setAttributeNode(newAttribute);
+          if (newAttribute) {
+            owner.setAttributeNode(newAttribute);
+          }
+
           owner.removeAttributeNode(attribute);
 
           if (attributeFn.options.ready && !(/hb-/i.test(owner.tagName.toLowerCase()))) {
@@ -236,7 +246,6 @@
         }
 
         var newElement = elementFn.apply(element, [elementAttributes]);
-
         Utils.replaceWith(element, newElement);
 
         for (var bIndex = 0; bIndex < attributes.length; bIndex++) {

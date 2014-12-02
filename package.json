@@ -1,7 +1,7 @@
 {
   "name": "handlebars.element",
   "description": "Handlebars plugin for custom elements syntax support",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "mateusmaso",
   "keywords": ["handlebars", "javascript", "custom", "element"],
   "devDependencies": {

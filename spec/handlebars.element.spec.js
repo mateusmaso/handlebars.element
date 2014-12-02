@@ -18,17 +18,17 @@ describe("handlebars.element", function() {
 
     it("should be registered and parsable", function() {
       var template = Handlebars.compile("<hb-foo></hb-foo>");
-      var html = Handlebars.parseHTML(template({}));
+      var nodes = Handlebars.parseHTML(template({}));
       var div = document.createElement("div");
-      div.appendChild(html[0]);
+      div.appendChild(nodes[0]);
       chai.expect(div.innerHTML).to.equal('<div id="foo"></div>');
     });
 
     it("should check for normal and boolean attributes", function() {
       var template = Handlebars.compile("<hb-foo id='hello-world' foo></hb-foo>");
-      var html = Handlebars.parseHTML(template({}));
+      var nodes = Handlebars.parseHTML(template({}));
       var div = document.createElement("div");
-      div.appendChild(html[0]);
+      div.appendChild(nodes[0]);
       chai.expect(div.innerHTML).to.equal('<div id="hello-world" class="foo"></div>');
     });
   });
@@ -36,17 +36,17 @@ describe("handlebars.element", function() {
   describe("attribute", function() {
     it("should be registered and parsable", function() {
       var template = Handlebars.compile("<div hb-bar></div>");
-      var html = Handlebars.parseHTML(template({}));
+      var nodes = Handlebars.parseHTML(template({}));
       var div = document.createElement("div");
-      div.appendChild(html[0]);
+      div.appendChild(nodes[0]);
       chai.expect(div.innerHTML).to.equal('<div id="bar"></div>');
     });
 
     it("should work on a custom element", function() {
       var template = Handlebars.compile("<hb-foo hb-bar></hb-foo>");
-      var html = Handlebars.parseHTML(template({}));
+      var nodes = Handlebars.parseHTML(template({}));
       var div = document.createElement("div");
-      div.appendChild(html[0]);
+      div.appendChild(nodes[0]);
       chai.expect(div.innerHTML).to.equal('<div id="bar"></div>');
     });
   });
