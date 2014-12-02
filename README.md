@@ -5,8 +5,9 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ## Features
 
+* ```registerElement``` method for defining custom elements.
+* ```registerAttribute``` method for defining custom attributes.
 * New ```parseHTML``` method for parsing string templates into HTML nodes.
-* ```registerElement``` and ```registerAttribute``` methods for defining custom elements and attributes.
 
 ## Dependencies
 
@@ -37,7 +38,7 @@ Handlebars.registerElement("foo", function(attributes) {
   div.innerText = "Hello World " + (attributes.title ? attributes.title : "guest");
 
   if (attributes.red) {
-    div.className = "red;";
+    div.className = "red";
   } else if (attributes.green) {
     div.className = "green";
   } else if (attributes.blue) {
