@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.1.2
+// v0.1.3
 //
 // Copyright (c) 2013-2014 Mateus Maso
 // Distributed under MIT license
@@ -141,7 +141,7 @@
   };
 
   Handlebars.parseValue = function(value, bool) {
-    var object = Handlebars.store.release(value);
+    var object = Handlebars.store[value];
 
     if (object) {
       value = object;

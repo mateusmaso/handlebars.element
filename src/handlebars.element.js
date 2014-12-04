@@ -132,7 +132,7 @@
   };
 
   Handlebars.parseValue = function(value, bool) {
-    var object = Handlebars.store.release(value);
+    var object = Handlebars.store[value];
 
     if (object) {
       value = object;
