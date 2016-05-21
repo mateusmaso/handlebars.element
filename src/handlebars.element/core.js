@@ -1,4 +1,10 @@
-import {replaceWith, isString, flatten, camelize} from "./utils"
+import {
+  replaceWith,
+  isString,
+  flatten,
+  camelize
+} from "./utils"
+
 import store from "./store"
 
 export let elements = {};
