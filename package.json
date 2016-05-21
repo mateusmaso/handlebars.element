@@ -35,6 +35,9 @@
   "scripts": {
     "test": "grunt mochaTest"
   },
+  "engines": {
+    "node" : "~5.9.0"
+  },
   "license": "MIT",
   "main": "lib/index.js"
 }
