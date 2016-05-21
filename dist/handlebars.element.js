@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.2.2
+// v0.2.3
 //
 // Copyright (c) 2013-2016 Mateus Maso
 // Distributed under MIT license
@@ -9,56 +9,6 @@
 
 
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _utils = require('./handlebars.element/utils');
-
-var _core = require('./handlebars.element/core');
-
-var _store = require('./handlebars.element/store');
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function HandlebarsElement(Handlebars) {
-  (0, _utils.extend)(Handlebars, {
-    store: _store2.default,
-    elements: _core.elements,
-    attributes: _core.attributes,
-    registerElement: _core.registerElement,
-    registerAttribute: _core.registerAttribute,
-    parseValue: _core.parseValue,
-    parseHTML: _core.parseHTML
-  });
-
-  (0, _utils.extend)(Handlebars.Utils, {
-    extend: _utils.extend,
-    isObject: _utils.isObject,
-    isString: _utils.isString,
-    uniqueId: _utils.uniqueId,
-    flatten: _utils.flatten,
-    camelize: _utils.camelize,
-    replaceWith: _utils.replaceWith,
-    insertAfter: _utils.insertAfter,
-    escapeExpression: _utils.escapeExpression,
-    _escapeExpression: Handlebars.Utils.escapeExpression
-  });
-
-  return Handlebars;
-}
-
-if (typeof window !== "undefined") {
-  HandlebarsElement = HandlebarsElement(window.Handlebars);
-}
-
-exports.default = HandlebarsElement;
-
-},{"./handlebars.element/core":2,"./handlebars.element/store":3,"./handlebars.element/utils":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -70,11 +20,15 @@ exports.registerAttribute = registerAttribute;
 exports.parseValue = parseValue;
 exports.parseHTML = parseHTML;
 
-var _utils = require("./utils");
+var _utils = require("./../utils");
 
-var _store = require("./store");
+var _store = require("./../store");
 
 var _store2 = _interopRequireDefault(_store);
+
+var _deps = require("./../deps");
+
+var _deps2 = _interopRequireDefault(_deps);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -114,7 +68,7 @@ function parseValue(value, bool) {
 function parseHTML(html) {
   var bindings = [];
 
-  if (html instanceof Handlebars.SafeString) {
+  if (html instanceof _deps2.default.Handlebars.SafeString) {
     html = html.toString();
   }
 
@@ -214,7 +168,78 @@ function parseHTML(html) {
   return (0, _utils.flatten)(rootNodes);
 };
 
-},{"./store":3,"./utils":4}],3:[function(require,module,exports){
+},{"./../deps":2,"./../store":4,"./../utils":5}],2:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getUtils = getUtils;
+var deps = {};
+
+function getUtils() {
+  return deps.Handlebars.Utils;
+}
+
+exports.default = deps;
+
+},{}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _utils = require('./utils');
+
+var _core = require('./core');
+
+var _store = require('./store');
+
+var _store2 = _interopRequireDefault(_store);
+
+var _deps = require('./deps');
+
+var _deps2 = _interopRequireDefault(_deps);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function HandlebarsElement(Handlebars) {
+  (0, _utils.extend)(_deps2.default, { Handlebars: Handlebars });
+
+  (0, _utils.extend)(Handlebars, {
+    store: _store2.default,
+    elements: _core.elements,
+    attributes: _core.attributes,
+    registerElement: _core.registerElement,
+    registerAttribute: _core.registerAttribute,
+    parseValue: _core.parseValue,
+    parseHTML: _core.parseHTML
+  });
+
+  (0, _utils.extend)(Handlebars.Utils, {
+    extend: _utils.extend,
+    isObject: _utils.isObject,
+    isString: _utils.isString,
+    uniqueId: _utils.uniqueId,
+    flatten: _utils.flatten,
+    camelize: _utils.camelize,
+    replaceWith: _utils.replaceWith,
+    insertAfter: _utils.insertAfter,
+    escapeExpression: _utils.escapeExpression,
+    _escapeExpression: Handlebars.Utils.escapeExpression
+  });
+
+  return Handlebars;
+}
+
+if (typeof window !== "undefined" && window.Handlebars) {
+  HandlebarsElement = HandlebarsElement(window.Handlebars);
+}
+
+exports.default = HandlebarsElement;
+
+},{"./core":1,"./deps":2,"./store":4,"./utils":5}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -223,11 +248,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.hold = hold;
 exports.release = release;
 exports.keyFor = keyFor;
-
-var _utils = require("./utils");
-
-var store = {};
-
 function hold(key, value) {
   return store[key] = value;
 }
@@ -246,11 +266,11 @@ function keyFor(value) {
   }
 }
 
-(0, _utils.extend)(store, { hold: hold, release: release, keyFor: keyFor });
+var store = { hold: hold, release: release, keyFor: keyFor };
 
 exports.default = store;
 
-},{"./utils":4}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -266,9 +286,11 @@ exports.replaceWith = replaceWith;
 exports.insertAfter = insertAfter;
 exports.escapeExpression = escapeExpression;
 
-var _store = require("./store");
+var _store = require("./../store");
 
 var _store2 = _interopRequireDefault(_store);
+
+var _deps = require("./../deps");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -305,7 +327,7 @@ function flatten(array, flattenArray) {
   flattenArray = flattenArray || [];
 
   for (var index = 0; index < array.length; index++) {
-    if (Handlebars.Utils.isArray(array[index])) {
+    if ((0, _deps.getUtils)().isArray(array[index])) {
       flatten(array[index], flattenArray);
     } else {
       flattenArray.push(array[index]);
@@ -322,7 +344,7 @@ function camelize(string) {
 }
 
 function replaceWith(node, nodes) {
-  nodes = Handlebars.Utils.isArray(nodes) ? nodes : [nodes];
+  nodes = (0, _deps.getUtils)().isArray(nodes) ? nodes : [nodes];
 
   for (var index = 0; index < nodes.length; index++) {
     if (index == 0) {
@@ -334,7 +356,7 @@ function replaceWith(node, nodes) {
 }
 
 function insertAfter(node, nodes) {
-  nodes = Handlebars.Utils.isArray(nodes) ? nodes.slice() : [nodes];
+  nodes = (0, _deps.getUtils)().isArray(nodes) ? nodes.slice() : [nodes];
   nodes.unshift(node);
 
   for (var index = 1; index < nodes.length; index++) {
@@ -347,7 +369,7 @@ function insertAfter(node, nodes) {
 }
 
 function escapeExpression(value) {
-  if (isObject(value) && !(value instanceof Handlebars.SafeString)) {
+  if (isObject(value) && !(value instanceof _deps.deps.Handlebars.SafeString)) {
     var id = _store2.default.keyFor(value);
 
     if (id) {
@@ -361,7 +383,7 @@ function escapeExpression(value) {
     value = value.toString();
   }
 
-  return Handlebars.Utils._escapeExpression(value);
+  return (0, _deps.getUtils)()._escapeExpression(value);
 }
 
-},{"./store":3}]},{},[1,2,3,4]);
+},{"./../deps":2,"./../store":4}]},{},[1,2,3,4,5]);

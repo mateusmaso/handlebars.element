@@ -48,21 +48,22 @@ module.exports = function(grunt) {
         }
       }
     },
-    mocha: {
-      options: {
-        run: true
-      },
+    mochaTest: {
       test: {
-        src: ['spec/**/*.html']
+        options: {
+          reporter: 'spec',
+          mocha: require('mocha')
+        },
+        src: ['spec/**/*.js']
       }
     },
     clean: ['lib', 'dist']
   });
 
-  grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['babel', 'browserify', 'uglify', 'mocha']);
+  grunt.registerTask('default', ['babel', 'browserify', 'uglify', 'mochaTest']);
 };

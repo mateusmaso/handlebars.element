@@ -8,7 +8,7 @@ import {
   replaceWith,
   insertAfter,
   escapeExpression
-} from './handlebars.element/utils';
+} from './utils';
 
 import {
   elements,
@@ -17,11 +17,14 @@ import {
   registerAttribute,
   parseValue,
   parseHTML
-} from './handlebars.element/core';
+} from './core';
 
-import store from "./handlebars.element/store";
+import store from "./store";
+import deps from "./deps";
 
 function HandlebarsElement(Handlebars) {
+  extend(deps, {Handlebars});
+
   extend(Handlebars, {
     store,
     elements,
@@ -48,7 +51,7 @@ function HandlebarsElement(Handlebars) {
   return Handlebars;
 }
 
-if (typeof window !== "undefined") {
+if (typeof window !== "undefined" && window.Handlebars) {
   HandlebarsElement = HandlebarsElement(window.Handlebars);
 }
 

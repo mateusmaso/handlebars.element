@@ -1,37 +1,28 @@
-"use strict";
+import {
+  replaceWith,
+  isString,
+  flatten,
+  camelize
+} from "./../utils";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.attributes = exports.elements = undefined;
-exports.registerElement = registerElement;
-exports.registerAttribute = registerAttribute;
-exports.parseValue = parseValue;
-exports.parseHTML = parseHTML;
+import store from "./../store";
+import deps from "./../deps";
 
-var _utils = require("./utils");
+export let elements = {};
+export let attributes = {};
 
-var _store = require("./store");
-
-var _store2 = _interopRequireDefault(_store);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var elements = exports.elements = {};
-var attributes = exports.attributes = {};
-
-function registerElement(name, fn, options) {
+export function registerElement(name, fn, options) {
   fn.options = options || {};
   elements[name] = fn;
 }
 
-function registerAttribute(name, fn, options) {
+export function registerAttribute(name, fn, options) {
   fn.options = options || {};
   attributes[name] = fn;
 }
 
-function parseValue(value, bool) {
-  var object = _store2.default[value];
+export function parseValue(value, bool) {
+  var object = store[value];
 
   if (object) {
     value = object;
@@ -47,17 +38,17 @@ function parseValue(value, bool) {
     value = parseFloat(value);
   }
 
-  return bool ? value || value === "" ? true : false : value === "" ? undefined : value;
+  return bool ? (value || value === "" ? true : false) : (value === "" ? undefined : value);
 }
 
-function parseHTML(html) {
+export function parseHTML(html) {
   var bindings = [];
 
-  if (html instanceof Handlebars.SafeString) {
+  if (html instanceof deps.Handlebars.SafeString) {
     html = html.toString();
   }
 
-  if ((0, _utils.isString)(html)) {
+  if (isString(html)) {
     var div = document.createElement('div');
     div.innerHTML = html.trim();
     var rootNodes = div.childNodes;
@@ -65,14 +56,14 @@ function parseHTML(html) {
     var rootNodes = html;
   }
 
-  var nodes = (0, _utils.flatten)(rootNodes);
+  var nodes = flatten(rootNodes);
 
   while (nodes.length != 0) {
     var nextNodes = [];
 
     for (var index = 0; index < nodes.length; index++) {
-      var binding = { owner: nodes[index], element: undefined, attributes: [] };
-      var childNodes = (0, _utils.flatten)(nodes[index].childNodes);
+      var binding = {owner: nodes[index], element: undefined, attributes: []};
+      var childNodes = flatten(nodes[index].childNodes);
 
       for (var bIndex = 0; bIndex < childNodes.length; bIndex++) {
         nextNodes.push(childNodes[bIndex]);
@@ -116,7 +107,7 @@ function parseHTML(html) {
 
         bindingOwner.removeAttributeNode(bindingAttribute);
 
-        if (bindingAttributeFn.options.ready && !/hb-/i.test(bindingOwner.tagName.toLowerCase())) {
+        if (bindingAttributeFn.options.ready && !(/hb-/i.test(bindingOwner.tagName.toLowerCase()))) {
           bindingAttributeFn.options.ready.apply(bindingAttribute, [bindingOwner]);
         }
       }
@@ -129,14 +120,14 @@ function parseHTML(html) {
 
       for (var bIndex = 0; bIndex < bindingElement.attributes.length; bIndex++) {
         var bindingAttribute = bindingElement.attributes.item(bIndex);
-        var bindingAttributeName = (0, _utils.camelize)(bindingAttribute.nodeName);
+        var bindingAttributeName = camelize(bindingAttribute.nodeName);
         var bool = bindingElementFn.options.booleans && bindingElementFn.options.booleans.indexOf(bindingAttributeName) >= 0;
 
         bindingElementAttributes[bindingAttributeName] = parseValue(bindingAttribute.nodeValue, bool);
       }
 
       var newElement = bindingElementFn.apply(bindingElement, [bindingElementAttributes]);
-      (0, _utils.replaceWith)(bindingElement, newElement);
+      replaceWith(bindingElement, newElement);
 
       for (var bIndex = 0; bIndex < bindingAttributes.length; bIndex++) {
         var bindingAttribute = bindingAttributes[bIndex];
@@ -150,5 +141,5 @@ function parseHTML(html) {
     }
   }
 
-  return (0, _utils.flatten)(rootNodes);
+  return flatten(rootNodes);
 };

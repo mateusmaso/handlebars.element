@@ -1,4 +1,5 @@
-import store from "./store"
+import store from "./../store";
+import {deps, getUtils} from "./../deps";
 
 export function extend(object) {
   for (let i = 1; i < arguments.length; i++) {
@@ -33,7 +34,7 @@ export function flatten(array, flattenArray) {
   flattenArray = flattenArray || [];
 
   for (var index = 0; index < array.length; index++) {
-    if (Handlebars.Utils.isArray(array[index])) {
+    if (getUtils().isArray(array[index])) {
       flatten(array[index], flattenArray);
     } else {
       flattenArray.push(array[index]);
@@ -50,7 +51,7 @@ export function camelize(string) {
 }
 
 export function replaceWith(node, nodes) {
-  nodes = Handlebars.Utils.isArray(nodes) ? nodes : [nodes];
+  nodes = getUtils().isArray(nodes) ? nodes : [nodes];
 
   for (var index = 0; index < nodes.length; index++) {
     if (index == 0) {
@@ -62,7 +63,7 @@ export function replaceWith(node, nodes) {
 }
 
 export function insertAfter(node, nodes) {
-  nodes = Handlebars.Utils.isArray(nodes) ? nodes.slice() : [nodes];
+  nodes = getUtils().isArray(nodes) ? nodes.slice() : [nodes];
   nodes.unshift(node);
 
   for (var index = 1; index < nodes.length; index++) {
@@ -75,7 +76,7 @@ export function insertAfter(node, nodes) {
 }
 
 export function escapeExpression(value) {
-  if (isObject(value) && !(value instanceof Handlebars.SafeString)) {
+  if (isObject(value) && !(value instanceof deps.Handlebars.SafeString)) {
     var id = store.keyFor(value);
 
     if (id) {
@@ -89,5 +90,5 @@ export function escapeExpression(value) {
     value = value.toString();
   }
 
-  return Handlebars.Utils._escapeExpression(value);
+  return getUtils()._escapeExpression(value);
 }
