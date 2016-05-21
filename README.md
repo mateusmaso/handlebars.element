@@ -1,42 +1,38 @@
 handlebars.element [![Build Status](https://travis-ci.org/mateusmaso/handlebars.element.svg?branch=master)](https://travis-ci.org/mateusmaso/handlebars.element)
 ==================
 
-This library is an extension for Handlebars which allows declaring custom elements and attributes without modern browser restrictions. The goal behind this project is to encourage the adoption of this new declarative syntax and support the spec as a proof of concept.
+This is a Handlebars plugin which allows using a similar W3C syntax for declaring custom elements and attributes inside templates.
 
-## Features
+## Install
 
-* ```registerElement``` method for defining custom elements.
-* ```registerAttribute``` method for defining custom attributes.
-* New ```parseHTML``` method for parsing string templates into HTML nodes.
-
-## Dependencies
-
-* handlebars.js
-
-## Node
-
-```javascript
-var Handlebars = require("handlebars");
-require("handlebars.element").default(Handlebars);
 ```
-
-## ES6
-
-```javascript
-import Handlebars from "handlebars";
-import HandlebarsElement from "handlebars.element";
-HandlebarsElement(Handlebars);
+$ npm install --save handlebars.element
 ```
 
 ## Usage
 
 ```javascript
+var Handlebars = require("handlebars");
+require("handlebars.element").default(Handlebars);
+
 var context = {};
-var template = Handlebars.templates["path/to/your/template"];
+var template = Handlebars.templates["path/to/template"];
 var nodes = Handlebars.parseHTML(template(context));
 ```
 
 ## Examples
+
+### Declaring custom elements and attributes
+
+```html
+<div>
+  <p hb-bar>Now you can write custom elements and attributes with Handlebars!</p>
+  <hb-foo title="Red" red></hb-foo>
+  <hb-foo title="Green" green></hb-foo>
+  <hb-foo title="Blue" blue></hb-foo>
+  <hb-foo title="Purple" hb-bar></hb-foo>
+</div>
+```
 
 ### Registering a custom element
 
@@ -68,29 +64,16 @@ Handlebars.registerAttribute("bar", function(element) {
   return style;
 }, {
   ready: function(element) {
-    // this callback ensures that the element is a valid HTML node.
-    // it is useful in cases that the attribute was declared inside a custom element scope.
+    // Use this callback for listening to element events.
   }
 });
 ```
 
-### Declaring using the hb-* syntax
+### After ```parseHTML```
 
 ```html
 <div>
-  <p hb-bar>Now you can have custom elements or attributes with Handlebars!</p>
-  <hb-foo title="Red" red></hb-foo>
-  <hb-foo title="Green" green></hb-foo>
-  <hb-foo title="Blue" blue></hb-foo>
-  <hb-foo title="Purple" hb-bar></hb-foo>
-</div>
-```
-
-### Expected result after render
-
-```html
-<div>
-  <p class="purple">Now you can have custom elements or attributes with Handlebars!</p>
+  <p class="purple">Now you can write custom elements and attributes with Handlebars!</p>
   <div class="red">Hello World Red</div>
   <div class="green">Hello World Green</div>
   <div class="blue">Hello World Blue</div>
@@ -100,4 +83,4 @@ Handlebars.registerAttribute("bar", function(element) {
 
 ## License
 
-Copyright (c) 2013 Mateus Maso. Released under an MIT license.
+MIT © [Mateus Maso](http://www.mateusmaso.com)

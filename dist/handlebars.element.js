@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.3.0
+// v0.3.1
 //
 // Copyright (c) 2013-2016 Mateus Maso
 // Distributed under MIT license
