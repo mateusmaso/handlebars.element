@@ -17,7 +17,15 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ```javascript
 var Handlebars = require("handlebars");
-require("handlebars.element")(Handlebars);
+require("handlebars.element").default(Handlebars);
+```
+
+## ES6
+
+```javascript
+import Handlebars from "handlebars";
+import HandlebarsElement from "handlebars.element";
+HandlebarsElement(Handlebars);
 ```
 
 ## Usage
