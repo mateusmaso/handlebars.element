@@ -60,7 +60,8 @@ Handlebars.registerAttribute("bar", function(element) {
   return style;
 }, {
   ready: function(element) {
-    // this callback ensures that the element is a valid HTML node. It is useful in cases that the attribute was declared inside a custom element scope.
+    // this callback ensures that the element is a valid HTML node.
+    // it is useful in cases that the attribute was declared inside a custom element scope.
   }
 });
 ```
