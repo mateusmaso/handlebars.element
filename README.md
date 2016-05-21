@@ -11,13 +11,13 @@ This library is an extension for Handlebars which allows declaring custom elemen
 
 ## Dependencies
 
-* handlebars.js (>= 1.1.0)
+* handlebars.js
 
 ## Node
 
 ```javascript
-var Handlebars = global.Handlebars = require("handlebars");
-require("handlebars.element");
+var Handlebars = require("handlebars");
+require("handlebars.element")(Handlebars);
 ```
 
 ## Usage
@@ -91,4 +91,4 @@ Handlebars.registerAttribute("bar", function(element) {
 
 ## License
 
-Copyright (c) 2013-2014 Mateus Maso. Released under an MIT license.
+Copyright (c) 2013 Mateus Maso. Released under an MIT license.

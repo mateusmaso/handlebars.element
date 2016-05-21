@@ -19,17 +19,33 @@ module.exports = function(grunt) {
         banner: '<%= meta.banner %>'
       },
       build: {
-        src: 'src/<%= pkg.name %>.js',
+        src: 'dist/<%= pkg.name %>.js',
         dest: 'dist/<%= pkg.name %>.min.js'
       }
     },
-    concat: {
+    babel: {
+      options: {
+        presets: ['es2015']
+      },
+      dist: {
+        files: [
+          {
+            expand: true,
+            cwd: 'src/',
+            src: ['**/*.js'],
+            dest: 'lib/'
+          }
+        ]
+      }
+    },
+    browserify: {
       options: {
         banner: '<%= meta.banner %>'
       },
       dist: {
-        src: ['src/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        files: {
+          'dist/<%= pkg.name %>.js': ['lib/**/*.js']
+        }
       }
     },
     mocha: {
@@ -40,12 +56,13 @@ module.exports = function(grunt) {
         src: ['spec/**/*.html']
       }
     },
-    clean: ['dist']
+    clean: ['lib', 'dist']
   });
 
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-babel');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-concat');
 
-  grunt.registerTask('default', ['uglify', 'concat', 'mocha']);
+  grunt.registerTask('default', ['babel', 'browserify', 'uglify', 'mocha']);
 };
