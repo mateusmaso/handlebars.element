@@ -1,5 +1,5 @@
-import store from "./../store";
-import {deps, getUtils} from "./../deps";
+import store from "../store";
+import deps, {getUtils} from "../deps";
 
 export function extend(object) {
   for (let i = 1; i < arguments.length; i++) {

@@ -1,3 +1,7 @@
+import {extend} from "../utils";
+
+let store = {};
+
 export function hold(key, value) {
   return store[key] = value;
 }
@@ -16,6 +20,6 @@ export function keyFor(value) {
   }
 }
 
-let store = {hold, release, keyFor};
+extend(store, {hold, release, keyFor});
 
 export default store;

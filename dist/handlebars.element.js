@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.2.4
+// v0.2.5
 //
 // Copyright (c) 2013-2016 Mateus Maso
 // Distributed under MIT license
@@ -20,13 +20,13 @@ exports.registerAttribute = registerAttribute;
 exports.parseValue = parseValue;
 exports.parseHTML = parseHTML;
 
-var _utils = require("./../utils");
+var _utils = require("../utils");
 
-var _store = require("./../store");
+var _store = require("../store");
 
 var _store2 = _interopRequireDefault(_store);
 
-var _deps = require("./../deps");
+var _deps = require("../deps");
 
 var _deps2 = _interopRequireDefault(_deps);
 
@@ -168,7 +168,7 @@ function parseHTML(html) {
   return (0, _utils.flatten)(rootNodes);
 };
 
-},{"./../deps":2,"./../store":4,"./../utils":5}],2:[function(require,module,exports){
+},{"../deps":2,"../store":4,"../utils":5}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -248,6 +248,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.hold = hold;
 exports.release = release;
 exports.keyFor = keyFor;
+
+var _utils = require("../utils");
+
+var store = {};
+
 function hold(key, value) {
   return store[key] = value;
 }
@@ -266,11 +271,11 @@ function keyFor(value) {
   }
 }
 
-var store = { hold: hold, release: release, keyFor: keyFor };
+(0, _utils.extend)(store, { hold: hold, release: release, keyFor: keyFor });
 
 exports.default = store;
 
-},{}],5:[function(require,module,exports){
+},{"../utils":5}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -286,11 +291,13 @@ exports.replaceWith = replaceWith;
 exports.insertAfter = insertAfter;
 exports.escapeExpression = escapeExpression;
 
-var _store = require("./../store");
+var _store = require("../store");
 
 var _store2 = _interopRequireDefault(_store);
 
-var _deps = require("./../deps");
+var _deps = require("../deps");
+
+var _deps2 = _interopRequireDefault(_deps);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -369,7 +376,7 @@ function insertAfter(node, nodes) {
 }
 
 function escapeExpression(value) {
-  if (isObject(value) && !(value instanceof _deps.deps.Handlebars.SafeString)) {
+  if (isObject(value) && !(value instanceof _deps2.default.Handlebars.SafeString)) {
     var id = _store2.default.keyFor(value);
 
     if (id) {
@@ -386,4 +393,4 @@ function escapeExpression(value) {
   return (0, _deps.getUtils)()._escapeExpression(value);
 }
 
-},{"./../deps":2,"./../store":4}]},{},[1,2,3,4,5]);
+},{"../deps":2,"../store":4}]},{},[1,2,3,4,5]);

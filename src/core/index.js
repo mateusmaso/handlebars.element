@@ -3,10 +3,10 @@ import {
   isString,
   flatten,
   camelize
-} from "./../utils";
+} from "../utils";
 
-import store from "./../store";
-import deps from "./../deps";
+import store from "../store";
+import deps from "../deps";
 
 export let elements = {};
 export let attributes = {};
