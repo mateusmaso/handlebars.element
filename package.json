@@ -1,13 +1,13 @@
 {
   "name": "handlebars.element",
-  "description": "Handlebars plugin for custom elements syntax support",
+  "description": "Handlebars plugin for declaring custom elements and attributes",
   "version": "0.3.1",
   "author": "mateusmaso",
   "license": "MIT",
   "keywords": [
     "handlebars",
-    "javascript",
     "custom elements",
+    "custom attributes",
     "web components"
   ],
   "devDependencies": {
