@@ -19,8 +19,11 @@ import {
   parseHTML
 } from './handlebars.element/core';
 
+import store from "./handlebars.element/store";
+
 function HandlebarsElement(Handlebars) {
   extend(Handlebars, {
+    store,
     elements,
     attributes,
     registerElement,
@@ -38,7 +41,8 @@ function HandlebarsElement(Handlebars) {
     camelize,
     replaceWith,
     insertAfter,
-    escapeExpression
+    escapeExpression,
+    _escapeExpression: Handlebars.Utils.escapeExpression
   });
 
   return Handlebars;

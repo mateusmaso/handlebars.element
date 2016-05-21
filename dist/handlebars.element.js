@@ -19,8 +19,15 @@ var _utils = require('./handlebars.element/utils');
 
 var _core = require('./handlebars.element/core');
 
+var _store = require('./handlebars.element/store');
+
+var _store2 = _interopRequireDefault(_store);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function HandlebarsElement(Handlebars) {
   (0, _utils.extend)(Handlebars, {
+    store: _store2.default,
     elements: _core.elements,
     attributes: _core.attributes,
     registerElement: _core.registerElement,
@@ -38,7 +45,8 @@ function HandlebarsElement(Handlebars) {
     camelize: _utils.camelize,
     replaceWith: _utils.replaceWith,
     insertAfter: _utils.insertAfter,
-    escapeExpression: _utils.escapeExpression
+    escapeExpression: _utils.escapeExpression,
+    _escapeExpression: Handlebars.Utils.escapeExpression
   });
 
   return Handlebars;
@@ -50,7 +58,7 @@ if (typeof window !== "undefined") {
 
 exports.default = HandlebarsElement;
 
-},{"./handlebars.element/core":2,"./handlebars.element/utils":4}],2:[function(require,module,exports){
+},{"./handlebars.element/core":2,"./handlebars.element/store":3,"./handlebars.element/utils":4}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -353,22 +361,7 @@ function escapeExpression(value) {
     value = value.toString();
   }
 
-  if (typeof string !== 'string') {
-    if (string && string.toHTML) {
-      return string.toHTML();
-    } else if (string == null) {
-      return '';
-    } else if (!string) {
-      return string + '';
-    }
-
-    string = '' + string;
-  }
-
-  if (!possible.test(string)) {
-    return string;
-  }
-  return string.replace(badChars, escapeChar);
+  return Handlebars.Utils._escapeExpression(value);
 }
 
 },{"./store":3}]},{},[1,2,3,4]);
