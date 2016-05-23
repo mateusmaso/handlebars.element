@@ -56,6 +56,12 @@ module.exports = function(grunt) {
         },
         src: ['spec/**/*.js']
       }
+    },
+    mocha_phantomjs: {
+      options: {
+        reporter: 'spec'
+      },
+      all: ['spec/**/*.html']
     }
   });
 
@@ -63,6 +69,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-mocha-phantomjs');
 
-  grunt.registerTask('default', ['babel', 'browserify', 'uglify', 'mochaTest']);
+  grunt.registerTask('default', ['babel', 'browserify', 'uglify', 'mochaTest', 'mocha_phantomjs']);
 };
