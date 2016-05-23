@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.3.3
+// v0.3.4
 //
 // Copyright (c) 2013-2016 Mateus Maso
 // Distributed under MIT license
@@ -147,7 +147,7 @@ function parseHTML(html) {
         var bindingAttributeName = (0, _utils.camelize)(bindingAttribute.nodeName);
         var bool = bindingElementFn.options.booleans && bindingElementFn.options.booleans.indexOf(bindingAttributeName) >= 0;
 
-        bindingElementAttributes[bindingAttributeName] = parseValue(bindingAttribute.nodeValue, bool);
+        bindingElementAttributes[bindingAttributeName] = this.parseValue(bindingAttribute.nodeValue, bool);
       }
 
       var newElement = bindingElementFn.apply(bindingElement, [bindingElementAttributes]);
@@ -394,4 +394,4 @@ function escapeExpression(value) {
   return (0, _deps.getUtils)()._escapeExpression(value);
 }
 
-},{"../deps":2,"../store":4}]},{},[1,2,3,4,5]);
+},{"../deps":2,"../store":4}]},{},[3]);

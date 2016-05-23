@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.js': ['lib/**/*.js']
+          'dist/<%= pkg.name %>.js': ['lib/index.js']
         }
       }
     },
@@ -54,14 +54,14 @@ module.exports = function(grunt) {
           reporter: 'spec',
           mocha: require('mocha')
         },
-        src: ['spec/**/*.js']
+        src: ['spec/index.js']
       }
     },
     mocha_phantomjs: {
       options: {
         reporter: 'spec'
       },
-      all: ['spec/**/*.html']
+      all: ['spec/index.html']
     }
   });
 

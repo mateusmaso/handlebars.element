@@ -123,7 +123,7 @@ export function parseHTML(html) {
         var bindingAttributeName = camelize(bindingAttribute.nodeName);
         var bool = bindingElementFn.options.booleans && bindingElementFn.options.booleans.indexOf(bindingAttributeName) >= 0;
 
-        bindingElementAttributes[bindingAttributeName] = parseValue(bindingAttribute.nodeValue, bool);
+        bindingElementAttributes[bindingAttributeName] = this.parseValue(bindingAttribute.nodeValue, bool);
       }
 
       var newElement = bindingElementFn.apply(bindingElement, [bindingElementAttributes]);
