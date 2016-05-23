@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.3.1
+// v0.3.2
 //
 // Copyright (c) 2013-2016 Mateus Maso
 // Distributed under MIT license
@@ -189,6 +189,7 @@ exports.default = deps;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = HandlebarsElement;
 
 var _utils = require('./utils');
 
@@ -234,10 +235,8 @@ function HandlebarsElement(Handlebars) {
 }
 
 if (typeof window !== "undefined" && window.Handlebars) {
-  HandlebarsElement = HandlebarsElement(window.Handlebars);
+  HandlebarsElement(window.Handlebars);
 }
-
-exports.default = HandlebarsElement;
 
 },{"./core":1,"./deps":2,"./store":4,"./utils":5}],4:[function(require,module,exports){
 "use strict";

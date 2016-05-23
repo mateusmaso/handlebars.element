@@ -1,7 +1,7 @@
 {
   "name": "handlebars.element",
   "description": "Handlebars plugin for declaring custom elements and attributes",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "mateusmaso",
   "license": "MIT",
   "keywords": [

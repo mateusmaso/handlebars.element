@@ -22,7 +22,7 @@ import {
 import store from "./store";
 import deps from "./deps";
 
-function HandlebarsElement(Handlebars) {
+export default function HandlebarsElement(Handlebars) {
   extend(deps, {Handlebars});
 
   extend(Handlebars, {
@@ -52,7 +52,5 @@ function HandlebarsElement(Handlebars) {
 }
 
 if (typeof window !== "undefined" && window.Handlebars) {
-  HandlebarsElement = HandlebarsElement(window.Handlebars);
+  HandlebarsElement(window.Handlebars);
 }
-
-export default HandlebarsElement;

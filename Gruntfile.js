@@ -56,14 +56,13 @@ module.exports = function(grunt) {
         },
         src: ['spec/**/*.js']
       }
-    },
-    clean: ['lib', 'dist']
+    }
   });
 
-  grunt.loadNpmTasks('grunt-mocha-test');
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-mocha-test');
 
   grunt.registerTask('default', ['babel', 'browserify', 'uglify', 'mochaTest']);
 };
