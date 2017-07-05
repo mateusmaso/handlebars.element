@@ -18,7 +18,7 @@ export function isObject(object) {
 }
 
 export function isString(object) {
-  return toString.call(object) == '[object String]';
+  return typeof object === 'string' || object instanceof String;
 }
 
 export function uniqueId() {
