@@ -1,5 +1,4 @@
 import {
-  extend,
   isObject,
   isString,
   uniqueId,
@@ -11,6 +10,7 @@ import {
 } from './utils';
 
 import {
+  store,
   elements,
   attributes,
   registerElement,
@@ -19,36 +19,46 @@ import {
   parseHTML
 } from './core';
 
-import store from "./store";
-import deps from "./deps";
+function bindAll(object, parent) {
+  Object.keys(object).forEach((key) => {
+    if (typeof object[key] === "function") {
+      object[key] = object[key].bind(parent)
+    }
+  })
+
+  return object;
+};
+
+function wrapEscapeExpression(Handlebars) {
+  return {
+    _escapeExpression: Handlebars.Utils.escapeExpression,
+    escapeExpression: (value) => {
+      return escapeExpression.apply(Handlebars.Utils, [value, store, Handlebars.SafeString])
+    }
+  };
+};
 
 export default function HandlebarsElement(Handlebars) {
-  if (!deps.Handlebars) {
-    extend(deps, {Handlebars});
+  Object.assign(Handlebars, bindAll({
+    store,
+    elements,
+    attributes,
+    registerElement,
+    registerAttribute,
+    parseValue,
+    parseHTML
+  }, Handlebars));
 
-    extend(Handlebars, {
-      store,
-      elements,
-      attributes,
-      registerElement,
-      registerAttribute,
-      parseValue,
-      parseHTML
-    });
-
-    extend(Handlebars.Utils, {
-      extend,
-      isObject,
-      isString,
-      uniqueId,
-      flatten,
-      camelize,
-      replaceWith,
-      insertAfter,
-      escapeExpression,
-      _escapeExpression: Handlebars.Utils.escapeExpression
-    });
-  }
+  Object.assign(Handlebars.Utils, bindAll({
+    isObject,
+    isString,
+    uniqueId,
+    flatten,
+    camelize,
+    replaceWith,
+    insertAfter,
+    ...wrapEscapeExpression(Handlebars)
+  }, Handlebars.Utils));
 
   return Handlebars;
 }
