@@ -1,5 +1,5 @@
-export default function escapeExpression(value, store, SafeString) {
-  if (this.isObject(value) && !(value instanceof SafeString)) {
+export default function escapeExpression(value, store) {
+  if (this.isObject(value) && !value.toHTML) {
     var id = store.keyFor(value);
 
     if (id) {

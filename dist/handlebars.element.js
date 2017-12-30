@@ -1,6 +1,6 @@
 // handlebars.element
 // ------------------
-// v0.3.7
+// v0.3.8
 //
 // Copyright (c) 2013-2017 Mateus Maso
 // Distributed under MIT license
@@ -274,11 +274,19 @@ function bindAll(object, parent) {
   return object;
 };
 
-function wrapEscapeExpression(Handlebars) {
+function extendEscapeExpression(Handlebars) {
+  var _escapeExpression;
+
+  if (Handlebars.Utils._escapeExpression) {
+    _escapeExpression = Handlebars.Utils._escapeExpression;
+  } else {
+    _escapeExpression = Handlebars.Utils.escapeExpression;
+  }
+
   return {
-    _escapeExpression: Handlebars.Utils.escapeExpression,
+    _escapeExpression: _escapeExpression,
     escapeExpression: function escapeExpression(value) {
-      return _utils.escapeExpression.apply(Handlebars.Utils, [value, _core.store, Handlebars.SafeString]);
+      return _utils.escapeExpression.apply(Handlebars.Utils, [value, Handlebars.store]);
     }
   };
 };
@@ -302,7 +310,7 @@ function HandlebarsElement(Handlebars) {
     camelize: _utils.camelize,
     replaceWith: _utils.replaceWith,
     insertAfter: _utils.insertAfter
-  }, wrapEscapeExpression(Handlebars)), Handlebars.Utils));
+  }, extendEscapeExpression(Handlebars)), Handlebars.Utils));
 
   return Handlebars;
 }
@@ -331,8 +339,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = escapeExpression;
-function escapeExpression(value, store, SafeString) {
-  if (this.isObject(value) && !(value instanceof SafeString)) {
+function escapeExpression(value, store) {
+  if (this.isObject(value) && !value.toHTML) {
     var id = store.keyFor(value);
 
     if (id) {

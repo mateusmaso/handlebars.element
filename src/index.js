@@ -29,11 +29,19 @@ function bindAll(object, parent) {
   return object;
 };
 
-function wrapEscapeExpression(Handlebars) {
+function extendEscapeExpression(Handlebars) {
+  var _escapeExpression;
+
+  if (Handlebars.Utils._escapeExpression) {
+    _escapeExpression = Handlebars.Utils._escapeExpression;
+  } else {
+    _escapeExpression = Handlebars.Utils.escapeExpression;
+  }
+
   return {
-    _escapeExpression: Handlebars.Utils.escapeExpression,
+    _escapeExpression,
     escapeExpression: (value) => {
-      return escapeExpression.apply(Handlebars.Utils, [value, store, Handlebars.SafeString])
+      return escapeExpression.apply(Handlebars.Utils, [value, Handlebars.store])
     }
   };
 };
@@ -57,7 +65,7 @@ export default function HandlebarsElement(Handlebars) {
     camelize,
     replaceWith,
     insertAfter,
-    ...wrapEscapeExpression(Handlebars)
+    ...extendEscapeExpression(Handlebars)
   }, Handlebars.Utils));
 
   return Handlebars;
