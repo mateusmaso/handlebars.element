@@ -1,3 +1,6 @@
+import {HTMLSerializer, HTMLParser, voidMap} from 'simple-dom';
+import {tokenize} from 'simple-html-tokenizer';
+
 export default function parseHTML(html) {
   var {isString, flatten, camelize, replaceWith} = this.Utils;
   var bindings = [];
@@ -7,9 +10,9 @@ export default function parseHTML(html) {
   }
 
   if (isString(html)) {
-    var div = document.createElement('div');
-    div.innerHTML = html.trim();
-    var rootNodes = div.childNodes;
+    var parser = new HTMLParser(tokenize, document, voidMap);
+    var fragment = parser.parse(html.trim());
+    var rootNodes = fragment.childNodes;
   } else {
     var rootNodes = html;
   }

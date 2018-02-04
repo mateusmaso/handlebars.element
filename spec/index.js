@@ -19,6 +19,12 @@ describe("handlebars.element", function() {
         return div;
       }, {booleans: ["foo"]});
 
+      Handlebars.registerElement("foo-option", function(attributes) {
+        var option = document.createElement("option");
+        option.value = "foo";
+        return option;
+      });
+
       Handlebars.registerAttribute("bar", function(element) {
         var id = document.createAttribute("id");
         id.value = "bar";
@@ -40,6 +46,14 @@ describe("handlebars.element", function() {
       var div = document.createElement("div");
       div.appendChild(nodes[0]);
       chai.expect(div.innerHTML).to.equal('<div id="hello-world" class="foo"></div>');
+    });
+
+    it("should render inside `select`", function() {
+      var template = Handlebars.compile("<select><hb-foo-option></hb-foo-option></select>");
+      var nodes = Handlebars.parseHTML(template({}));
+      var div = document.createElement("div");
+      div.appendChild(nodes[0]);
+      chai.expect(div.innerHTML).to.equal('<select><option value="foo"></option></select>');
     });
   });
 
